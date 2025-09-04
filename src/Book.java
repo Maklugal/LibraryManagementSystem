@@ -7,8 +7,18 @@ public class Book {
     private boolean isBorrowed;
 
     public Book(String title, String author, int year) {
-        this.title = Objects.requireNonNull(title, "title cannot be null").trim();
-        this.author = Objects.requireNonNull(author, "author cannot be null").trim();
+        String trimmedTitle = Objects.requireNonNull(title, "title cannot be null").trim();
+        if (trimmedTitle.isEmpty()) {
+            throw new IllegalArgumentException("title cannot be blank");
+        }
+        this.title = trimmedTitle;
+
+        String trimmedAuthor = Objects.requireNonNull(author, "author cannot be null").trim();
+        if (trimmedAuthor.isEmpty()) {
+            throw new IllegalArgumentException("author cannot be blank");
+        }
+        this.author = trimmedAuthor;
+
         if (year <= 0) throw new IllegalArgumentException("year must be positive");
         this.year = year;
         this.isBorrowed = false;
@@ -37,9 +47,6 @@ public class Book {
         if (isBorrowed) return false;
         isBorrowed = true;
         return true;
-
-
-
     }
 
     /**
